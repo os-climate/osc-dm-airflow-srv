@@ -1,0 +1,34 @@
+
+reading_step:
+  class_name: "loader.geotiff_reader.GeotiffReader"
+  file_path: "/opt/airflow/data/River_flood_extent_1971_2000_hist_no_protection.tif"
+  data_field: "flood_risk"
+
+aggregation_steps:
+  - class_name: "loader.aggregation_step.MinAggregation"
+  - class_name: "loader.aggregation_step.MaxAggregation"
+  - class_name: "loader.aggregation_step.MedianAggregation"
+  - class_name: "loader.aggregation_step.MeanAggregation"
+
+aggregation_resolution: 7
+
+postprocessing_steps:
+  - class_name: "loader.postprocessing_step.AddConstantColumn"
+    column_name: "scenario"
+    column_value: "hist"
+    
+  - class_name: "loader.postprocessing_step.AddConstantColumn"
+    column_name: "with_prot"
+    column_value: "no_protection"
+    
+  - class_name: "loader.postprocessing_step.AddConstantColumn"
+    column_name: "date_range"
+    column_value: "1971-2000"
+    
+output_step: 
+  class_name: "loader.output_step.LocalDuckdbOutputStep"
+  database_dir: "/opt/airflow/geodatabases"
+  dataset_name: "tu_delft_River_flood_extent_1971_2000_hist_no_protection"
+  mode: "create"
+  description: "a flood dataset from TU Delft"
+  dataset_type: "h3_index"

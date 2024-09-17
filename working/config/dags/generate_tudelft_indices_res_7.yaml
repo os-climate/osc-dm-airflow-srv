@@ -1,0 +1,155 @@
+
+dag:
+  max_active_runs: 1
+  concurrency: 4
+
+
+tasks:
+  task-preprocessing:
+    downstream: [delete_tudelft_output]
+
+  delete_tudelft_output:
+    downstream: [tu_delft_River_flood_depth_1971_2000_hist_0010y,tu_delft_River_flood_depth_1971_2000_hist_0030y,tu_delft_River_flood_depth_1971_2000_hist_0100y,tu_delft_River_flood_depth_1971_2000_hist_0300y,tu_delft_River_flood_depth_1971_2000_hist_1000y,tu_delft_River_flood_depth_2021_2050_RCP45_0010y,tu_delft_River_flood_depth_2021_2050_RCP45_0030y,tu_delft_River_flood_depth_2021_2050_RCP45_0100y,tu_delft_River_flood_depth_2021_2050_RCP45_0300y,tu_delft_River_flood_depth_2021_2050_RCP45_1000y,tu_delft_River_flood_depth_2021_2050_RCP85_0010y,tu_delft_River_flood_depth_2021_2050_RCP85_0030y,tu_delft_River_flood_depth_2021_2050_RCP85_0100y,tu_delft_River_flood_depth_2021_2050_RCP85_0300y,tu_delft_River_flood_depth_2021_2050_RCP85_1000y,tu_delft_River_flood_depth_2071_2100_RCP45_0010y,tu_delft_River_flood_depth_2071_2100_RCP45_0030y,tu_delft_River_flood_depth_2071_2100_RCP45_0100y,tu_delft_River_flood_depth_2071_2100_RCP45_0300y,tu_delft_River_flood_depth_2071_2100_RCP45_1000y,tu_delft_River_flood_depth_2071_2100_RCP85_0010y,tu_delft_River_flood_depth_2071_2100_RCP85_0030y,tu_delft_River_flood_depth_2071_2100_RCP85_0100y,tu_delft_River_flood_depth_2071_2100_RCP85_0300y,tu_delft_River_flood_depth_2071_2100_RCP85_1000y,tu_delft_River_flood_extent_1971_2000_hist_no_protection,tu_delft_River_flood_extent_1971_2000_hist_with_protection,tu_delft_River_flood_extent_2021_2050_RCP45_no_protection,tu_delft_River_flood_extent_2021_2050_RCP45_with_protection,tu_delft_River_flood_extent_2021_2050_RCP85_no_protection,tu_delft_River_flood_extent_2021_2050_RCP85_with_protection,tu_delft_River_flood_extent_2071_2100_RCP45_no_protection,tu_delft_River_flood_extent_2071_2100_RCP45_with_protection,tu_delft_River_flood_extent_2071_2100_RCP85_no_protection,tu_delft_River_flood_extent_2071_2100_RCP85_with_protection]
+
+  tu_delft_River_flood_depth_1971_2000_hist_0010y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_1971_2000_hist_0030y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_1971_2000_hist_0100y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_1971_2000_hist_0300y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_1971_2000_hist_1000y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP45_0010y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP45_0030y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP45_0100y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP45_0300y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP45_1000y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP85_0010y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP85_0030y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP85_0100y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP85_0300y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2021_2050_RCP85_1000y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP45_0010y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP45_0030y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP45_0100y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP45_0300y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP45_1000y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP85_0010y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP85_0030y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP85_0100y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP85_0300y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_depth_2071_2100_RCP85_1000y:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_1971_2000_hist_no_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_1971_2000_hist_with_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2021_2050_RCP45_no_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2021_2050_RCP45_with_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2021_2050_RCP85_no_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2021_2050_RCP85_with_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2071_2100_RCP45_no_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2071_2100_RCP45_with_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2071_2100_RCP85_no_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  tu_delft_River_flood_extent_2071_2100_RCP85_with_protection:
+    type: docker
+    downstream: [task-postprocessing]
+
+  task-postprocessing:
+    downstream: []

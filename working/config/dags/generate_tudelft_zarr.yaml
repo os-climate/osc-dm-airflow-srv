@@ -1,0 +1,26 @@
+dag:
+  max_active_runs: 1
+  concurrency: 4
+
+
+tasks:
+  task-preprocessing:
+    downstream: [ tudelft-zarr-historical-1971, tudelft-zarr-rcp4p5-2035, tudelft-zarr-rcp4p5-2085, tudelft-zarr-rcp8p5-2035, tudelft-zarr-rcp8p5-2085 ]
+
+  tudelft-zarr-historical-1971:
+    downstream: [ task-postprocessing ]
+
+  tudelft-zarr-rcp4p5-2035:
+    downstream: [ task-postprocessing ]
+  
+  tudelft-zarr-rcp4p5-2085:
+    downstream: [ task-postprocessing ]
+
+  tudelft-zarr-rcp8p5-2035:
+    downstream: [ task-postprocessing ]
+
+  tudelft-zarr-rcp8p5-2085:
+    downstream: [ task-postprocessing ]
+
+  task-postprocessing:
+    downstream: [ ]

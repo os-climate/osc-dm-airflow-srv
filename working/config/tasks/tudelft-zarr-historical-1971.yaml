@@ -1,0 +1,27 @@
+
+task:
+
+  task_id: tudelft-zarr-historical-1971
+  type: docker
+
+  image: registry.arfima.com/project-x/dockersandbox/dbroda/com.brodagroup.hazards.task
+  container_name: com.brodagroup.hazards.task-tudelft-zarr-historical-1971
+  api_version: auto
+  auto_remove: true
+  docker_url: unix://var/run/docker.sock
+  network_mode: bridge
+  command: "
+  python /app/src/cli.py load \
+    --bucket physrisk-hazard-indicators \
+    --store hazard/hazard.zarr \
+    --input_dir \"/opt/airflow/data/\" \
+    --output_dir \"/opt/airflow/geodatabases/zarr\" \
+    --model_class \"hazard.onboard.tudelft_flood.TUDelftRiverFlood\" \
+    --scenario \"historical\" \
+    --year \"1971\"
+  "
+
+  mounts:
+    - /home/docker/rawdata/tudelft_river/:/opt/airflow/data
+    - /home/docker/dags/working/output:/opt/airflow/geodatabases
+    - /home/docker/dags/working/task_files:/opt/airflow/task_files
