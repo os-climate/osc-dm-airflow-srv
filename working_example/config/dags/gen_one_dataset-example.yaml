@@ -1,0 +1,22 @@
+
+dag:
+  max_active_runs: 1
+  concurrency: 4
+
+
+tasks:
+  task-preprocessing:
+    downstream: [delete_metadata_output-example]
+
+  delete_metadata_output-example:
+    downstream: [delete_single_dataset_output-example]
+
+  delete_single_dataset_output-example:
+    downstream: [tu_delft_River_flood_depth_1971_2000_hist_0010y-example]
+
+  tu_delft_River_flood_depth_1971_2000_hist_0010y-example:
+    type: docker
+    downstream: [task-postprocessing]
+
+  task-postprocessing:
+    downstream: []

@@ -43,7 +43,10 @@ def read_config(file_path: str):
 
 def load_configurations():
     # Path to the configuration directory
-    config_dir = '/home/airflow/sources/working/config'
+    working_dir = "/opt/airflow/working"
+        #os.environ.get("WORKING_DIR")
+    print(f"\n\nDAVIS_DEBUG: working dir was {working_dir}\n\n")
+    config_dir = f'{working_dir}/config'
     logger.info(f"Using main configuration directory:{config_dir}")
 
     # Path to the DAGs configuration directory
@@ -177,7 +180,7 @@ def create_task(task_id: str, config: Dict[str, Any]):
             "docker_url": config.get("docker_url", "tcp://docker-proxy:2375"),
             "network_mode": config.get("network_mode", None),
             "environment": config.get("environment", None),
-            "docker_conn_id":'prx_registry',  
+            "docker_conn_id": config.get('docker_conn_id', None)
         }
 
         mounts_raw = config.get("mounts")

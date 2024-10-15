@@ -127,3 +127,7 @@ dmypy.json
 .idea
 
 temp*
+
+example_rawdata
+
+airflow

@@ -4,15 +4,16 @@ task:
   task_id: tu_delft_River_flood_depth_2021_2050_RCP85_0030y
   type: docker
 
-  image: registry.arfima.com/project-x/dockersandbox/dbroda/osc-geo-h3grid-srv
-  container_name: osc-geo-h3grid-srv-tu_delft_River_flood_depth_2021_2050_RCP85_0030y
+  image: registry.arfima.com/project-x/dockersandbox/dbroda/osc-geo-h3loader-cli
+  container_name: osc-geo-h3loader-cli-tu_delft_River_flood_depth_2021_2050_RCP85_0030y
   api_version: auto
   auto_remove: true
   docker_url: unix://var/run/docker.sock
+  docker_conn_id: prx_registry
   network_mode: bridge
-  command: "python /app/src/cli/cli_load.py --host localhost --port 8000 load-pipeline --config_path /opt/airflow/task_files/tudelft_index_conf/tu_delft_River_flood_depth_2021_2050_RCP85_0030y.yml"
+  command: "python /app/src/cli/cli_load.py load-pipeline --config_path /opt/airflow/task_files/tudelft_index_conf/tu_delft_River_flood_depth_2021_2050_RCP85_0030y.yml"
 
   mounts:
-    - /home/docker/rawdata/tudelft_river/:/opt/airflow/data
-    - /home/docker/dags/working/output:/opt/airflow/geodatabases
-    - /home/docker/dags/working/task_files:/opt/airflow/task_files
+    - ${RAW_DATA_DIR}/:/opt/airflow/data
+    - ${WORKING_DIR}/output:/opt/airflow/geodatabases
+    - ${WORKING_DIR}/task_files:/opt/airflow/task_files

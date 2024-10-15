@@ -1,0 +1,3 @@
+task:
+  type: bash
+  command: "rm ${AIRFLOW_HOME_DIR}/working/output/dataset_metadata.duckdb || true"

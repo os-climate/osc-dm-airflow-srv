@@ -1,0 +1,65 @@
+#
+# docker-compose.yml: Docker-Compose to start Airflow components
+#
+# Copyright 2024 Broda Group Software Inc.
+#
+# Use of this source code is governed by an MIT-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/MIT.
+#
+# Created:  2024-10-08 by 15205060+DavisBroda@users.noreply.github.com
+#####
+
+version: '3'
+
+x-airflow-common:
+  &airflow-common
+  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.9.2}
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/db/airflow.db
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 5 # Just to have a fast load in the front-end. Do not use it in production with those configurations.
+    AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW__CORE__ENABLE_XCOM_PICKLING: 'true' # "_run_image of the DockerOperator returns now a python string, not a byte string" Ref: https://github.com/apache/airflow/issues/13487
+    WORKING_DIR: ${WORKING_DIR} # path to the working directory on the underlying machine that runs docker
+    AIRFLOW_HOME_DIR: /${AIRFLOW_HOME_DIR} # directory relative to root of airflow docker filesystem
+    RAW_DATA_DIR: ${RAW_DATA_DIR} # path to the raw data on the underlying machine that runs docker
+  volumes:
+    - ${PROJECT_DIR}/dags:/opt/airflow/dags
+    - ${PROJECT_DIR}/airflow/logs:/opt/airflow/logs
+    - ${PROJECT_DIR}/airflow/plugins:/opt/airflow/plugins
+    - ${PROJECT_DIR}/airflow/db:/opt/airflow/db
+    - ${PROJECT_DIR}/airflow/airflow.cfg:/opt/airflow/airflow.cfg
+    - ${WORKING_DIR}:/opt/airflow/working
+    - /var/run/docker.sock:/var/run/docker.sock # We will pass the Docker Deamon as a volume to allow the webserver containers start docker images. Ref: https://stackoverflow.com/q/51342810/7024760
+    - /tmp:/tmp
+  user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
+
+services:
+  airflow-webserver:
+    <<: *airflow-common
+    ports:
+      - "8080:8080"
+    command: webserver
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+
+  # There is a permission problem (error "13", access denied) on the
+  # docker socket (var/run/docker.sock).  The solution is to add a
+  # docker proxy (as per StackOverflow solution entry below):
+  # https://stackoverflow.com/questions/62499661/airflow-dockeroperator-fails-with-permission-denied-error
+  # Note that this also requires each DockerOperator to use
+  # docker_url = "docker_url="tcp://docker-proxy:2375"
+  docker-proxy:
+    image: bobrik/socat
+    command: "TCP4-LISTEN:2375,fork,reuseaddr UNIX-CONNECT:/var/run/docker.sock"
+    ports:
+      - "2376:2375"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
