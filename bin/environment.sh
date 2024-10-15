@@ -18,7 +18,7 @@ fi
 
 # TODO: rename to osc naming convention
 export ROOT_DIR="$HOME_DIR"
-export PROJECT="climate-dags-temp"
+export PROJECT="osc-dm-airflow-srv"
 export PROJECT_DIR="$ROOT_DIR/$PROJECT"
 
 $PROJECT_DIR/bin/show.sh
