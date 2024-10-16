@@ -1,0 +1,22 @@
+
+dag:
+  max_active_runs: 1
+  concurrency: 4
+
+
+tasks:
+  task-preprocessing:
+    downstream: [delete_metadata_output-example]
+
+  delete_metadata_output-example:
+    downstream: [delete_example_loading_pipeline_output]
+
+  delete_example_loading_pipeline_output:
+    downstream: [example_loading_pipeline]
+
+  example_loading_pipeline:
+    type: docker
+    downstream: [task-postprocessing]
+
+  task-postprocessing:
+    downstream: []

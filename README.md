@@ -24,18 +24,49 @@ repository. Run the below environment script to set them up.
 source ./bin/environment.sh
 ~~~~
 
-### Getting data
+### Running a local airflow docker
+
+To start a local docker image, first ensure that the docker daemon
+is running, then run the below command:
+
+~~~
+./bin/start_airflow.sh
+~~~
+
+This will start the airflow server, which can be accessed at `localhost:8080`.
+To log in to the server using the following credentials:
+(username: admin, password: admin)
+
+### Running example DAG
+
+In order to run the example DAG, first the local airflow docker must be
+set up (see "Running a local airflow docker" section).
+Once that is done access the airflow at
+`localhost:8080` and credentials: (username: admin, password: admin).
+Once logged in enable the gen_one_dataset-example DAG. Then click on
+the DAG named example_loading_pipeline,
+which wil bring you to the screen for this specific
+DAG. In the top right there will be a trigger DAG button
+(which looks like a blue arrow). Click this button to start the DAG.
+
+This dag will take the example_rawdata/example_dataset.parquet
+data and generate the `example_loading_pipeline.duckdb`
+and `dataset_metadata.duckdb` files in
+the `./working_example/output/` directory.
+
+### Production Example DAG
+
+The previous example DAG is very simple to allow for a quick and easy example.
+This next DAG will replicate something closer to a production environment by
+using more data.
+
+#### Getting data
 
 Flood data from TuDelft will be used as an example dataset.
-In order to retrieve the example data, first create a directory to store it
-in. Note that this data is 5GB in size, though only a small piece of it is used
+Note that this data is 5GB in size, though only a small piece of it is used
 in the provided example.
 
-~~~
-mkdir ./example_rawdata
-~~~
-
-With the directory created the data can be retrieved from the below link
+Data can be retrieved from the below link
 
 - [Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip](https://data.4tu.nl/file/df7b63b0-1114-4515-a562-117ca165dc5b/5e6e4334-15b5-4721-a88d-0c8ca34aee17)
 
@@ -78,33 +109,22 @@ example_rawdata
         ...
 ```
 
-### Running a local airflow docker
-
-To start a local docker image, first ensure that the docker daemon
-is running, then run the below command:
-
-~~~
-./bin/start_airflow.sh
-~~~
-
-This will start the airflow server, which can be accessed at `localhost:8080`.
-To log in to the server using the following credentials: 
-(username: admin, password: admin)
-
-### Running example DAG
+#### Running the DAG
 
 In order to run the example DAG, first the local airflow docker must be
-set up (see above section). Once that is done access the airflow at 
-`localhost:8080` and credentials: (username: admin, password: admin). 
-Once logged in enable the gen_one_dataset-example DAG. Then click on 
-the DAG name, which wil bring you to the screen for this specific
+set up (see "Running a local airflow docker" section).
+Once that is done access the airflow at
+`localhost:8080` and credentials: (username: admin, password: admin).
+Once logged in enable the gen_one_dataset-example DAG. Then click on
+the DAG named gen_one_dataset-example,
+which wil bring you to the screen for this specific
 DAG. In the top right there will be a trigger DAG button
-(which looks like a blue arrow). Click this button to start the DAG. 
+(which looks like a blue arrow). Click this button to start the DAG.
 
-This dag will take a subset of the tudelft data retrieved earlier
-and generate the `tu_delft_River_flood_depth_1971_2000_hist_0010y.duckdb`
+This dag will take the example_rawdata/example_dataset.parquet
+data and generate the `tu_delft_River_flood_depth_1971_2000_hist_0010y.duckdb`
 and `dataset_metadata.duckdb` files in
-the `./working_example/output/` directory. 
+the `./working_example/output/` directory.
 
 
 ## Creating DAGs

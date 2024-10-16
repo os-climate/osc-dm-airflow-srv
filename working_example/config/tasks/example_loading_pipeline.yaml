@@ -1,0 +1,18 @@
+
+task:
+
+  task_id: tu_delft_River_flood_depth_1971_2000_hist_0010y
+  type: docker
+
+  image: brodagroupsoftware/osc-geo-h3loader-cli
+  container_name: osc-geo-h3loader-cli-example-loading-pipeline
+  api_version: auto
+  auto_remove: true
+  docker_url: tcp://docker-proxy:2375
+  network_mode: bridge
+  command: "python /app/src/cli/cli_load.py load-pipeline --config_path /opt/airflow/task_files/example_loading_pipeline.yml"
+
+  mounts:
+    - ${RAW_DATA_DIR}/:/opt/airflow/data
+    - ${WORKING_DIR}/output:/opt/airflow/geodatabases
+    - ${WORKING_DIR}/task_files:/opt/airflow/task_files

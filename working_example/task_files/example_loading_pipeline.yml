@@ -1,0 +1,24 @@
+reading_step:
+  class_name: "loader.reading_step.ParquetFileReader"
+  file_path: "/opt/airflow/data/example_dataset.parquet"
+  data_columns:
+    - value1
+    - value2
+
+aggregation_steps:
+  - class_name: "loader.aggregation_step.MinAggregation"
+  - class_name: "loader.aggregation_step.MaxAggregation"
+
+postprocessing_steps:
+  - class_name: "loader.postprocessing_step.MultiplyValue"
+    multiply_by: 2
+
+output_step:
+  class_name: "loader.output_step.LocalDuckdbOutputStep"
+  database_dir: "/opt/airflow/geodatabases"
+  dataset_name: "example_loading_pipeline"
+  mode: "create"
+  description: "a test dataset with all steps present"
+  dataset_type: "h3_index"
+
+aggregation_resolution: 1

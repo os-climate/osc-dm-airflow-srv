@@ -128,6 +128,9 @@ dmypy.json
 
 temp*
 
-example_rawdata
+example_rawdata/data
+example_rawdata/data.zip
+example_rawdata/Pan-European data sets of river flood probability of occurrence under present and future climate_1_all.zip
+example_rawdata/readme_river_floods_v1.1.pdf
 
 airflow
